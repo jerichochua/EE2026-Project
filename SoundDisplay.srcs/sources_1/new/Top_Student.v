@@ -4,10 +4,10 @@
 //
 //  FILL IN THE FOLLOWING INFORMATION:
 //
-//  LAB SESSION DAY (Delete where applicable): MONDAY P.M, TUESDAY P.M, WEDNESDAY P.M, THURSDAY A.M., THURSDAY P.M
+//  LAB SESSION DAY (Delete where applicable): THURSDAY A.M.
 //
-//  STUDENT A NAME: 
-//  STUDENT A MATRICULATION NUMBER: 
+//  STUDENT A NAME: Jericho Chua Wei Quan
+//  STUDENT A MATRICULATION NUMBER: A0201663N
 //
 //  STUDENT B NAME: 
 //  STUDENT B MATRICULATION NUMBER: 
@@ -20,8 +20,8 @@ module Top_Student (
     input CLK100MHZ,
     output J_MIC3_Pin1,   // Connect to this signal from Audio_Capture.v
     output J_MIC3_Pin4,    // Connect to this signal from Audio_Capture.v
-    output [11:0] led
-
+    output [11:0] led,
+    input sw,
     input btnC,
     output cs, // JX[0]
     output sdin, // JX[1]
@@ -37,13 +37,16 @@ module Top_Student (
     
     wire clk6p25m, clk3;
     wire reset;
-    wire [15:0] oled_data = 16'h07E0;
+    wire [15:0] oled_data;
     
-    wire frame_begin, sending_pixels, sample_pixel, pixel_index;
+    wire frame_begin, sending_pixels, sample_pixel;
+    wire [12:0] pixel_index;
     wire [4:0] teststate;
 
     clk20k_divider clk20 (CLK100MHZ, clk20k);
     Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
+    
+    assign oled_data = {8'h3f, mic_in[11:7]};
     
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
@@ -51,5 +54,6 @@ module Top_Student (
     Oled_Display OD(clk6p25m, reset, frame_begin, sending_pixels,
                     sample_pixel, pixel_index, oled_data, cs, sdin, sclk, d_cn, resn, vccen,
                     pmoden, teststate);
-    assign led = mic_in;
+    
+    assign led = (sw == 1) ? mic_in : 12'b000000000000;
 endmodule
