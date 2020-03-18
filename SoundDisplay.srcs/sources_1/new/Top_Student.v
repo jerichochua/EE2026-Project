@@ -9,8 +9,8 @@
 //  STUDENT A NAME: Jericho Chua Wei Quan
 //  STUDENT A MATRICULATION NUMBER: A0201663N
 //
-//  STUDENT B NAME: 
-//  STUDENT B MATRICULATION NUMBER: 
+//  STUDENT B NAME: Chen Qixing
+//  STUDENT B MATRICULATION NUMBER: A0196669A
 //
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -38,17 +38,16 @@ module Top_Student (
     wire clk6p25m, clk3;
     wire reset;
     wire [15:0] oled_data;
-    //wire [15:0] oled_data = 16'h07E0;
     
     wire frame_begin, sending_pixels, sample_pixel;
     wire [12:0] pixel_index;
     wire [4:0] teststate;
 
-    clk20k_divider clk20 (CLK100MHZ, clk20k);
+    //clk20k_divider clk20 (CLK100MHZ, clk20k);
+    clock_divider_20k clk20 (CLK100MHZ, clk20k);
     Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
     
     assign oled_data = {8'h3f, mic_in[11:7]};
-    //assign oled_data = {oled_data[15:5], mic_in[11:7]};
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
     debounce db(clk3, btnC, reset);
