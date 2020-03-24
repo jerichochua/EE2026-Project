@@ -11,3 +11,7 @@
 ## Links
 
 Basys 3 Reference Manual: https://reference.digilentinc.com/reference/programmable-logic/basys-3/reference-manual
+
+Pmod MIC3 Reference: https://reference.digilentinc.com/reference/pmod/pmodmic3/start
+
+Pmod OLEDRGB Reference: https://reference.digilentinc.com/reference/pmod/pmodoledrgb/start
