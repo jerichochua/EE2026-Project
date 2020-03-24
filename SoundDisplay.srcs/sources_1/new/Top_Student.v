@@ -20,7 +20,6 @@ module Top_Student (
     input CLK100MHZ,
     output J_MIC3_Pin1,   // Connect to this signal from Audio_Capture.v
     output J_MIC3_Pin4,    // Connect to this signal from Audio_Capture.v
-    output [11:0] led,
     input sw,
     input btnC,
     output cs, // JX[0]
@@ -29,23 +28,69 @@ module Top_Student (
     output d_cn, // JX[4]
     output resn, // JX[5]
     output vccen, // JX[6]
-    output pmoden // JX[7]
+    output pmoden, // JX[7]
+    output reg [15:0] led,
+    output [3:0] an,
+    output [7:0] seg
     );
     
     wire clk20k;
     wire [11:0] mic_in;
     
-    wire clk6p25m, clk3;
+    wire clk6p25m, clk3, clk_2s;
     wire reset;
     wire [15:0] oled_data;
     
     wire frame_begin, sending_pixels, sample_pixel;
     wire [12:0] pixel_index;
     wire [4:0] teststate;
+    
+    reg [11:0] max = 0;
+    reg [15:0] map;
+    reg [4:0] a2 = 10;
+    reg [4:0] a3 = 10;
+    
+    reg [26:0] clock_2s = 0;
 
     //clk20k_divider clk20 (CLK100MHZ, clk20k);
     clock_divider_20k clk20 (CLK100MHZ, clk20k);
     Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
+    
+    clock_divider_2s clk2s (CLK100MHZ, clk_2s);
+    
+    always @ (posedge CLK100MHZ) begin  
+        clock_2s <= clock_2s + 1;
+        if (mic_in > max) begin
+            max <= mic_in;
+        end
+
+        if (clock_2s == 0) begin
+            map <= (max - 2048) / 128;
+            led <= 16'b1111111111111111 >> (15 - map);
+
+            case (map)
+                0: begin a2 <= 10; a3 <= 0; max <= 0; end
+                1: begin a2 <= 10; a3 <= 1; max <= 0; end
+                2: begin a2 <= 10; a3 <= 2; max <= 0; end
+                3: begin a2 <= 10; a3 <= 3; max <= 0; end
+                4: begin a2 <= 10; a3 <= 4; max <= 0; end
+                5: begin a2 <= 10; a3 <= 5; max <= 0; end
+                6: begin a2 <= 10; a3 <= 6; max <= 0; end 
+                7: begin a2 <= 10; a3 <= 7; max <= 0; end
+                8: begin a2 <= 10; a3 <= 8; max <= 0; end
+                9: begin a2 <= 10; a3 <= 9; max <= 0; end
+                10: begin a2 <= 1; a3 <= 0; max <= 0; end
+                11: begin a2 <= 1; a3 <= 1; max <= 0; end
+                12: begin a2 <= 1; a3 <= 2; max <= 0; end
+                13: begin a2 <= 1; a3 <= 3; max <= 0; end
+                14: begin a2 <= 1; a3 <= 4; max <= 0; end
+                15: begin a2 <= 1; a3 <= 5; max <= 0; end
+                default: begin a2 <= 10; a3 <= 0; max <= 0; end
+            endcase
+        end
+    end
+    
+    sevensegdisp ssd (CLK100MHZ, 10, 10, a2, a3, an[3:0], seg[7:0]);
     
     assign oled_data = {8'h3f, mic_in[11:7]};
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
@@ -55,5 +100,5 @@ module Top_Student (
                     sample_pixel, pixel_index, oled_data, cs, sdin, sclk, d_cn, resn, vccen,
                     pmoden, teststate);
     
-    assign led = (sw == 1) ? mic_in : 12'b000000000000;
+    //assign led = (sw == 1) ? mic_in : 12'b000000000000;
 endmodule
