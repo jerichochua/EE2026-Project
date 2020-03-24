@@ -21,6 +21,11 @@ module Top_Student (
     output J_MIC3_Pin1,   // Connect to this signal from Audio_Capture.v
     output J_MIC3_Pin4,    // Connect to this signal from Audio_Capture.v
     input sw,
+    input sw1,
+    input sw2,
+    input sw3,
+    input sw4,
+    input sw5,
     input btnC,
     output cs, // JX[0]
     output sdin, // JX[1]
@@ -52,7 +57,15 @@ module Top_Student (
     
     reg [26:0] clock_2s = 0;
 
-    //clk20k_divider clk20 (CLK100MHZ, clk20k);
+    wire [6:0] x;
+    wire [5:0] y;
+    
+    wire [15:0] border_color;
+    wire [15:0] back_color;
+    wire [15:0] top_color;
+    wire [15:0] mid_color;
+    wire [15:0] bot_color;
+
     clock_divider_20k clk20 (CLK100MHZ, clk20k);
     Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
     
@@ -99,6 +112,10 @@ module Top_Student (
     Oled_Display OD(clk6p25m, reset, frame_begin, sending_pixels,
                     sample_pixel, pixel_index, oled_data, cs, sdin, sclk, d_cn, resn, vccen,
                     pmoden, teststate);
+
+    coordinate xy(pixel_index, x, y);
+    sel_color_scheme scs(sw4, sw5, border_color, back_color, top_color, mid_color, bot_color);
+    border p1(x, y, sw1, sw2, sw3, border_color, back_color, top_color, mid_color, bot_color, oled_data);
     
     //assign led = (sw == 1) ? mic_in : 12'b000000000000;
 endmodule
