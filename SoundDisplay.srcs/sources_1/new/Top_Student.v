@@ -50,6 +50,7 @@ module Top_Student (
     wire [12:0] pixel_index;
     wire [4:0] teststate;
     
+    reg [15:0] currled = 0;
     reg [11:0] max = 0;
     reg [15:0] map;
     reg [4:0] a2 = 10;
@@ -76,10 +77,19 @@ module Top_Student (
         if (mic_in > max) begin
             max <= mic_in;
         end
+        
+        if (sw == 1) begin
+            led <= mic_in;
+            a2 <= 10;
+            a3 <= 10;
+        end
+        else begin
+            led <= currled;
+        end
 
         if (clock_2s == 0) begin
             map <= (max - 2048) / 128;
-            led <= 16'b1111111111111111 >> (15 - map);
+            currled <= 16'b1111111111111111 >> (15 - map);
 
             case (map)
                 0: begin a2 <= 10; a3 <= 0; max <= 0; end
@@ -105,7 +115,7 @@ module Top_Student (
     
     sevensegdisp ssd (CLK100MHZ, 10, 10, a2, a3, an[3:0], seg[7:0]);
     
-    assign oled_data = {8'h3f, mic_in[11:7]};
+    //assign oled_data = {8'h3f, mic_in[11:7]};
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
     debounce db(clk3, btnC, reset);
@@ -115,7 +125,5 @@ module Top_Student (
 
     coordinate xy(pixel_index, x, y);
     sel_color_scheme scs(sw4, sw5, border_color, back_color, top_color, mid_color, bot_color);
-    border p1(x, y, sw1, sw2, sw3, border_color, back_color, top_color, mid_color, bot_color, oled_data);
-    
-    //assign led = (sw == 1) ? mic_in : 12'b000000000000;
+    border p1(x, y, sw1, sw2, sw3, border_color, back_color, top_color, mid_color, bot_color, oled_data);   
 endmodule
