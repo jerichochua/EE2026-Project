@@ -78,7 +78,7 @@ module Top_Student (
             max <= mic_in;
         end
         
-        map <= (mic_in - 2048) / 128;
+        map <= (max - 2048) / 128;
         currled <= 16'b1111111111111111 >> (15 - map);        
 
         if (sw == 1) begin
