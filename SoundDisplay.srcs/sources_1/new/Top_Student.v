@@ -72,12 +72,15 @@ module Top_Student (
     
     clock_divider_2s clk2s (CLK100MHZ, clk_2s);
     
-    always @ (posedge CLK100MHZ) begin  
+    always @ (posedge CLK100MHZ) begin
         clock_2s <= clock_2s + 1;
         if (mic_in > max) begin
             max <= mic_in;
         end
         
+        map <= (max - 2048) / 128;
+        currled <= 16'b1111111111111111 >> (15 - map);
+
         if (sw == 1) begin
             led <= mic_in;
             a2 <= 10;
@@ -86,11 +89,8 @@ module Top_Student (
         else begin
             led <= currled;
         end
-
+        
         if (clock_2s == 0) begin
-            map <= (max - 2048) / 128;
-            currled <= 16'b1111111111111111 >> (15 - map);
-
             case (map)
                 0: begin a2 <= 10; a3 <= 0; max <= 0; end
                 1: begin a2 <= 10; a3 <= 1; max <= 0; end
@@ -108,6 +108,7 @@ module Top_Student (
                 13: begin a2 <= 1; a3 <= 3; max <= 0; end
                 14: begin a2 <= 1; a3 <= 4; max <= 0; end
                 15: begin a2 <= 1; a3 <= 5; max <= 0; end
+                16: begin a2 <= 10; a3 <= 10; max <= 0; end 
                 default: begin a2 <= 10; a3 <= 0; max <= 0; end
             endcase
         end
@@ -115,7 +116,6 @@ module Top_Student (
     
     sevensegdisp ssd (CLK100MHZ, 10, 10, a2, a3, an[3:0], seg[7:0]);
     
-    //assign oled_data = {8'h3f, mic_in[11:7]};
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
     debounce db(clk3, btnC, reset);
