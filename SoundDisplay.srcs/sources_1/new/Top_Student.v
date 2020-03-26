@@ -52,7 +52,7 @@ module Top_Student (
     
     reg [15:0] currled = 0;
     reg [11:0] max = 0;
-    reg [3:0] map;
+    reg [15:0] map;
     reg [4:0] a2 = 10;
     reg [4:0] a3 = 10;
     
@@ -79,7 +79,7 @@ module Top_Student (
         end
         
         map <= (max - 2048) / 128;
-        currled <= 16'b1111111111111111 >> (15 - map);        
+        currled <= 16'b1111111111111111 >> (15 - map);
 
         if (sw == 1) begin
             led <= mic_in;
@@ -108,6 +108,7 @@ module Top_Student (
                 13: begin a2 <= 1; a3 <= 3; max <= 0; end
                 14: begin a2 <= 1; a3 <= 4; max <= 0; end
                 15: begin a2 <= 1; a3 <= 5; max <= 0; end
+                16: begin a2 <= 10; a3 <= 10; max <= 0; end 
                 default: begin a2 <= 10; a3 <= 0; max <= 0; end
             endcase
         end
