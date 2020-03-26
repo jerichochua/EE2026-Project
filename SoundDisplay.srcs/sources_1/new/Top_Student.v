@@ -121,5 +121,5 @@ module Top_Student (
 
     coordinate xy(pixel_index, x, y);
     sel_color_scheme scs(sw4, sw5, border_color, back_color, top_color, mid_color, bot_color);
-    border p1(x, y, sw1, sw2, sw3, border_color, back_color, top_color, mid_color, bot_color, oled_data);   
+    border p1(x, y, sw1, sw2, sw3, border_color, back_color, top_color, mid_color, bot_color, map, oled_data);   
 endmodule

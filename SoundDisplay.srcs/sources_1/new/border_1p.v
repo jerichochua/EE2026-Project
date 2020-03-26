@@ -39,12 +39,15 @@ module border(
     wire [15:0] mid = (sw2) ? mid_color : back_color; 
     wire [15:0] bot = (sw2) ? bot_color : back_color; 
     
+    reg [5:0] min = 53;
+
     always @ (*) begin
+        min = 56 - (map+1)*3;
         if (x < borderWidth || x > (7'd95 - borderWidth) || y < borderWidth || y > (6'd63 - borderWidth)) begin
             oled_data <= border_color;
         end
         else if (x >= 44 && x <= 51) begin
-            if (y >= 9 && y <= 55) begin
+            if (y >= min && y <= 55) begin
                 if ((y-8)%3 == 0)
                     oled_data <= back_color;
                 else if (y <= 23) // red
