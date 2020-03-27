@@ -44,8 +44,8 @@ localparam PixelCountWidth = $clog2(PixelCount);
 parameter ClkFreq = 6250000; // Hz
 input clk, reset;
 output frame_begin, sending_pixels, sample_pixel;
-output [PixelCountWidth-1:0] pixel_index;
-input [15:0] pixel_data;
+output [PixelCountWidth-1:0] pixel_index; // check pixel change color
+input [15:0] pixel_data; 
 output cs, sdin, sclk, d_cn, resn, vccen, pmoden;
 output [4:0] teststate;
 

@@ -26,6 +26,8 @@ module Top_Student (
     input sw3,
     input sw4,
     input sw5,
+    input sw6,
+    input sw7,
     input btnC,
     output cs, // JX[0]
     output sdin, // JX[1]
@@ -121,5 +123,6 @@ module Top_Student (
 
     coordinate xy(pixel_index, x, y);
     sel_color_scheme scs(sw4, sw5, border_color, back_color, top_color, mid_color, bot_color);
-    border p1(x, y, sw1, sw2, sw3, border_color, back_color, top_color, mid_color, bot_color, map, oled_data);   
+    border p1(x, y, sw1, sw2, sw3, sw6, sw7, 
+              border_color, back_color, top_color, mid_color, bot_color, map, oled_data); 
 endmodule
