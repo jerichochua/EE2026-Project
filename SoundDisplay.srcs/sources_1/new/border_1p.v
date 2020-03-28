@@ -27,6 +27,8 @@ module border(
     input sw1,
     input sw2,
     input sw3,
+    input sw6,
+    input sw7,
     input [15:0] border_color,
     input [15:0] back_color,
     input [15:0] top_color,
@@ -35,15 +37,23 @@ module border(
     input [3:0] map,
     output reg [15:0] oled_data
     );
-    wire [1:0] borderWidth = (sw1) ? ((sw3) ? 2'd3 : 2'd1) : 2'd0;
-    wire [15:0] top = (sw2) ? top_color : back_color; 
-    wire [15:0] mid = (sw2) ? mid_color : back_color; 
-    wire [15:0] bot = (sw2) ? bot_color : back_color; 
+    wire [1:0] borderWidth = (sw6) ? 2'd0 : ((sw1) ? ((sw3) ? 2'd3 : 2'd1) : 2'd0);
+    wire [15:0] top = (sw6) ? back_color : ((sw2) ? top_color : back_color); 
+    wire [15:0] mid = (sw6) ? back_color : ((sw2) ? mid_color : back_color); 
+    wire [15:0] bot = (sw6) ? back_color : ((sw2) ? bot_color : back_color); 
     
-    reg [5:0] min = 53;
-
+    reg [5:0] min = 9;
+    reg [5:0] freeze_value;
+    
     always @ (*) begin
-        min = 56 - (map+1)*3;
+        if (sw7) begin
+            min <= freeze_value;
+        end
+        else begin
+            min <= 56 - (map+1)*3;
+            freeze_value <= min;
+        end
+        
         if (x < borderWidth || x > (7'd95 - borderWidth) || y < borderWidth || y > (6'd63 - borderWidth)) begin
             oled_data <= border_color;
         end

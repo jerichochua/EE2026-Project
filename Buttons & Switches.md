@@ -11,6 +11,7 @@
     2'b01 : Show border only
     2'b10 : Show volume bar only
     2'b11 : Show border and volume bar
+
 ## sw3
     OFF : 1-pixel border (Default)
     ON  : 3-pixels border
@@ -19,23 +20,19 @@
         - Border : White
         - Background : Black
         - Bar (top to bottom) : Red, Yellow, Green
-    ON  : enable other color schemes
+    ON  : Enable other color schemes
 ## sw5
-    OFF : Color Scheme 2 (Tentative)
-        - Border : White
-        - Background : Black
-        - Bar (top to bottom) : Orange, Purple, Green
-    ON  : Color Scheme 3 (Tentative)
-        - Border : White
-        - Background : Black
-        - Bar (top to bottom) : Light Green, Dark Green, Light Blue
+    OFF : Color Scheme 2 
+    ON  : Color Scheme 3
+
+## sw6 
+    OFF : Show/hide border and volume bar based on sw1 & sw2 (Default)
+    ON  : Hide border and volume bar
+
+## sw7
+    OFF : Turn off freeze function (Default)
+    ON  : Turn on freeze function
 
 TODO:
-- Last pixel always light up
-- Showing/hiding OTHER components
-- Volume input adjust number of bars shown
-    - Input : volume (15 - 0)
-    - Adjust max height
-- Freeze function
-    - Additonal varible enable freeze, store freeze volume
-    - Keep volume as freeze volume
+    - Create wave based on mic_in
+    - Color scheme
