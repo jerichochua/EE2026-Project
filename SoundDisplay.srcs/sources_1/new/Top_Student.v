@@ -123,6 +123,8 @@ module Top_Student (
 
     coordinate xy(pixel_index, x, y);
     sel_color_scheme scs(sw4, sw5, border_color, back_color, top_color, mid_color, bot_color);
-    border p1(x, y, sw1, sw2, sw3, sw6, sw7, 
-              border_color, back_color, top_color, mid_color, bot_color, map, oled_data); 
+    wire [5:0] min = 9;
+    assign min = (sw7) ? min : 56 - (map + 1) * 3;
+    border p1(x, y, sw1, sw2, sw3, sw6,
+              border_color, back_color, top_color, mid_color, bot_color, min, oled_data); 
 endmodule
