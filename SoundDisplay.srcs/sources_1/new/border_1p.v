@@ -32,6 +32,7 @@ module border(
     input [15:0] top_color,
     input [15:0] mid_color,
     input [15:0] bot_color,
+    input [3:0] map,
     output reg [15:0] oled_data
     );
     wire [1:0] borderWidth = (sw1) ? ((sw3) ? 2'd3 : 2'd1) : 2'd0;

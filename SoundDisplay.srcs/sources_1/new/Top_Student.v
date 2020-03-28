@@ -56,7 +56,7 @@ module Top_Student (
     reg [4:0] a2 = 10;
     reg [4:0] a3 = 10;
     
-    reg [24:0] clock_2s = 0;
+    reg [23:0] clock_2s = 0;
 
     wire [6:0] x;
     wire [5:0] y;
@@ -95,7 +95,7 @@ module Top_Student (
                 3: begin a2 <= 10; a3 <= 3; max <= 0; end
                 4: begin a2 <= 10; a3 <= 4; max <= 0; end
                 5: begin a2 <= 10; a3 <= 5; max <= 0; end
-                6: begin a2 <= 10; a3 <= 6; max <= 0; end 
+                6: begin a2 <= 10; a3 <= 6; max <= 0; end
                 7: begin a2 <= 10; a3 <= 7; max <= 0; end
                 8: begin a2 <= 10; a3 <= 8; max <= 0; end
                 9: begin a2 <= 10; a3 <= 9; max <= 0; end
