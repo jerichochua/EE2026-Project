@@ -14,7 +14,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module Top_Student (
     input  J_MIC3_Pin3,   // Connect from this signal to Audio_Capture.v
     input CLK100MHZ,
@@ -48,6 +47,8 @@ module Top_Student (
     wire reset;
     wire [15:0] oled_data;
     
+    wire [15:0] vis_oled;
+    
     wire frame_begin, sending_pixels, sample_pixel;
     wire [12:0] pixel_index;
     wire [4:0] teststate;
@@ -64,12 +65,14 @@ module Top_Student (
     clock_divider_20k clk20 (CLK100MHZ, clk20k);
     Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
     
+    wire [4:0] a0;
+    wire [4:0] a1;
     wire [4:0] a2;
     wire [4:0] a3;
     wire [3:0] map;
     
-    get_map gm(CLK100MHZ, sw, mic_in, map, a2, a3, led);
-    sevensegdisp ssd (CLK100MHZ, 10, 10, a2, a3, an[3:0], seg[7:0]);
+    get_map gm(CLK100MHZ, sw, mic_in, map, a0, a1, a2, a3, led);
+    sevensegdisp ssd (CLK100MHZ, a0, a1, a2, a3, an[3:0], seg[7:0]);
     
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
