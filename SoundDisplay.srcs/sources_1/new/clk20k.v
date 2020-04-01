@@ -27,7 +27,7 @@ module clock_divider_20k(
     reg [12:0] counter = 13'd0;
     parameter factor = 13'd5000;
     always @ (posedge clk100M) begin
-        counter = counter + 13'd1;
+        counter <= counter + 13'd1;
         if (counter >= (factor - 1)) begin
             counter <= 13'd0;
         end

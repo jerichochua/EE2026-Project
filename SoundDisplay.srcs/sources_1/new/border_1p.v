@@ -27,13 +27,13 @@ module border(
     input sw2,
     input sw3,
     input sw6,
-    input sw7,
+//    input sw7,
     input [15:0] border_color,
     input [15:0] back_color,
     input [15:0] top_color,
     input [15:0] mid_color,
     input [15:0] bot_color,
-    input [3:0] map,
+    input [5:0] min,
     output reg [15:0] oled_data
     );
     wire [1:0] borderWidth = (sw6) ? 2'd0 : ((sw1) ? ((sw3) ? 2'd3 : 2'd1) : 2'd0);
@@ -41,8 +41,8 @@ module border(
     wire [15:0] mid = (sw6) ? back_color : ((sw2) ? mid_color : back_color); 
     wire [15:0] bot = (sw6) ? back_color : ((sw2) ? bot_color : back_color); 
     
-    reg [5:0] min;
-    reg [5:0] freeze_value;
+//    reg [5:0] min;
+//    reg [5:0] freeze_value;
     
     //assign freeze_value = (sw7) ? freeze_value : 56 - (map + 1) * 3;
 //    assign min = (sw7) ? min : 56 - (map + 1) * 3;
@@ -52,7 +52,7 @@ module border(
 //    end
     
     always @ (*) begin
-        min <= 56 - (map + 1) * 3;
+        //min <= 56 - (map + 1) * 3;
 //        if (sw7) begin
 //            min <= freeze_value;
 //        end
