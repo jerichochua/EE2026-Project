@@ -126,7 +126,6 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-<<<<<<< HEAD
       <File Path="$PSRCDIR/sources_1/new/freeze.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -134,8 +133,6 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-=======
->>>>>>> a448280c588562bcafe45273cfbf7b2c2d1627bb
       <File Path="$PSRCDIR/sources_1/new/get_map.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
