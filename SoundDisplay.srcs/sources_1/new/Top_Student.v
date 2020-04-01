@@ -14,7 +14,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-
 module Top_Student (
     input  J_MIC3_Pin3,   // Connect from this signal to Audio_Capture.v
     input CLK100MHZ,
@@ -48,17 +47,11 @@ module Top_Student (
     wire reset;
     wire [15:0] oled_data;
     
+    wire [15:0] vis_oled;
+    
     wire frame_begin, sending_pixels, sample_pixel;
     wire [12:0] pixel_index;
     wire [4:0] teststate;
-    
-//    reg [15:0] currled = 0;
-//    reg [11:0] max = 0;
-//    reg [3:0] map;
-//    reg [4:0] a2 = 10;
-//    reg [4:0] a3 = 10;
-    
-    //reg [23:0] clock_2s = 0;
 
     wire [6:0] x;
     wire [5:0] y;
@@ -72,51 +65,14 @@ module Top_Student (
     clock_divider_20k clk20 (CLK100MHZ, clk20k);
     Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
     
-//    always @ (posedge CLK100MHZ) begin
-//        clock_2s <= clock_2s + 1;
-//        if (mic_in > max) begin
-//            max <= mic_in;
-//        end
-        
-//        if (sw == 1) begin
-//            led <= mic_in;
-//            a2 <= 10;
-//            a3 <= 10;
-//        end
-//        else begin
-//            led <= currled;
-//        end
-        
-//        if (clock_2s == 0) begin
-//            map <= (max - 2048) / 128;
-//            currled <= 16'b1111111111111111 >> (15 - map);
-//            case (map)
-//                0: begin a2 <= 10; a3 <= 0; max <= 0; end
-//                1: begin a2 <= 10; a3 <= 1; max <= 0; end
-//                2: begin a2 <= 10; a3 <= 2; max <= 0; end
-//                3: begin a2 <= 10; a3 <= 3; max <= 0; end
-//                4: begin a2 <= 10; a3 <= 4; max <= 0; end
-//                5: begin a2 <= 10; a3 <= 5; max <= 0; end
-//                6: begin a2 <= 10; a3 <= 6; max <= 0; end
-//                7: begin a2 <= 10; a3 <= 7; max <= 0; end
-//                8: begin a2 <= 10; a3 <= 8; max <= 0; end
-//                9: begin a2 <= 10; a3 <= 9; max <= 0; end
-//                10: begin a2 <= 1; a3 <= 0; max <= 0; end
-//                11: begin a2 <= 1; a3 <= 1; max <= 0; end
-//                12: begin a2 <= 1; a3 <= 2; max <= 0; end
-//                13: begin a2 <= 1; a3 <= 3; max <= 0; end
-//                14: begin a2 <= 1; a3 <= 4; max <= 0; end
-//                15: begin a2 <= 1; a3 <= 5; max <= 0; end
-//                default: begin a2 <= 10; a3 <= 0; max <= 0; end
-//            endcase
-//        end
-//    end
+    wire [4:0] a0;
+    wire [4:0] a1;
     wire [4:0] a2;
     wire [4:0] a3;
     wire [3:0] map;
     
-    get_map gm(CLK100MHZ, sw, mic_in, map, a2, a3, led);
-    sevensegdisp ssd (CLK100MHZ, 10, 10, a2, a3, an[3:0], seg[7:0]);
+    get_map gm(CLK100MHZ, sw, mic_in, map, a0, a1, a2, a3, led);
+    sevensegdisp ssd (CLK100MHZ, a0, a1, a2, a3, an[3:0], seg[7:0]);
     
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
