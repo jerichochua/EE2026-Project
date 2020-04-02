@@ -27,6 +27,7 @@ module Top_Student (
     input sw5,
     input sw6,
     input sw7,
+    input sw15,
     input btnC,
     output cs, // JX[0]
     output sdin, // JX[1]
@@ -47,6 +48,7 @@ module Top_Student (
     wire reset;
     wire [15:0] oled_data;
     
+    wire [15:0] basic_oled_data;
     wire [15:0] vis_oled;
     
     wire frame_begin, sending_pixels, sample_pixel;
@@ -71,8 +73,12 @@ module Top_Student (
     wire [4:0] a3;
     wire [3:0] map;
     
+    assign oled_data = (sw15 == 1) ? vis_oled : basic_oled_data;
+    
     get_map gm(CLK100MHZ, sw, mic_in, map, a0, a1, a2, a3, led);
     sevensegdisp ssd (CLK100MHZ, a0, a1, a2, a3, an[3:0], seg[7:0]);
+    
+    visualizer vis (CLK100MHZ, mic_in, x, y, vis_oled);
     
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
@@ -89,5 +95,5 @@ module Top_Student (
     freeze f(CLK100MHZ, sw7, map, min);
 
     border p1(x, y, sw1, sw2, sw3, sw6,
-              border_color, back_color, top_color, mid_color, bot_color, min, oled_data); 
+              border_color, back_color, top_color, mid_color, bot_color, min, basic_oled_data); 
 endmodule
