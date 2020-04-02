@@ -5,18 +5,19 @@
     Game Logic Module
 */
 
-module ttt_game(input btnU, input btnD, input btnL, output reg currentPlayer = 0);
-    reg [3:0] currentBox = 1;
+module ttt_game(input btnU, input btnD, input btnL, output reg currentPlayer = 0,
+    output reg [3:0] currentBox = 1,
     
-    reg [1:0] box1 = 0;
-    reg [1:0] box2 = 0;
-    reg [1:0] box3 = 0;
-    reg [1:0] box4 = 0;
-    reg [1:0] box5 = 0;
-    reg [1:0] box6 = 0;
-    reg [1:0] box7 = 0;
-    reg [1:0] box8 = 0;
-    reg [1:0] box9 = 0;
+    output reg [1:0] box1 = 0,
+    output reg [1:0] box2 = 0,
+    output reg [1:0] box3 = 0,
+    output reg [1:0] box4 = 0,
+    output reg [1:0] box5 = 0,
+    output reg [1:0] box6 = 0,
+    output reg [1:0] box7 = 0,
+    output reg [1:0] box8 = 0,
+    output reg [1:0] box9 = 0
+    );
     
     always @ (*) begin
         if (btnU == 1) begin

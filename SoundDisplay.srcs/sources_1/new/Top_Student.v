@@ -156,8 +156,22 @@ module Top_Student (
     pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, clk5, pong_game_oled_data);
     // can try to change frame_begin to other clk OR debounce clk to improve
     
-    ttt_game tttgamelogic (dbU, dbD, dbL, currentPlayer);
     
-    assign oled_data = (sw15 == 1) ? vis_oled : (sw8 == 1) ? pong_game_oled_data : basic_oled_data;
-    
+    wire [3:0] curr_box;
+    wire [1:0] box1;
+    wire [1:0] box2; 
+    wire [1:0] box3;
+    wire [1:0] box4;
+    wire [1:0] box5;
+    wire [1:0] box6;
+    wire [1:0] box7; 
+    wire [1:0] box8;
+    wire [1:0] box9;
+    wire [15:0] ttt_oled_data;
+         
+    ttt_game tttgamelogic (dbU, dbD, dbL, currentPlayer, curr_box, 
+            box1, box2, box3, box4, box5, box6, box7, box8, box9);
+    ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
+//    assign oled_data = (sw15 == 1) ? vis_oled : (sw8 == 1) ? pong_game_oled_data : basic_oled_data;
+    assign oled_data = ttt_oled_data;    
 endmodule
