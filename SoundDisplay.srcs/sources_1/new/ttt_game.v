@@ -5,9 +5,8 @@
     Game Logic Module
 */
 
-module ttt_game(input btnU, input btnD, input btnL, output reg currentPlayer = 0,
+module ttt_game(input clk, input btnU, input btnD, input btnL, output reg currentPlayer = 0,
     output reg [3:0] currentBox = 1,
-    
     output reg [1:0] box1 = 0,
     output reg [1:0] box2 = 0,
     output reg [1:0] box3 = 0,
@@ -19,7 +18,7 @@ module ttt_game(input btnU, input btnD, input btnL, output reg currentPlayer = 0
     output reg [1:0] box9 = 0
     );
     
-    always @ (*) begin
+    always @ (posedge clk) begin
         if (btnU == 1) begin
             if (currentBox != 9)
                 currentBox <= currentBox + 1;
