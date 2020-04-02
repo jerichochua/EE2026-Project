@@ -1,0 +1,120 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Sat Mar 28 22:55:11 2020
+# Process ID: 5832
+# Current directory: F:/19SEM2/EE2026/EE_Project/EE2026-Project
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12108 F:\19SEM2\EE2026\EE_Project\EE2026-Project\SoundDisplay.xpr
+# Log file: F:/19SEM2/EE2026/EE_Project/EE2026-Project/vivado.log
+# Journal file: F:/19SEM2/EE2026/EE_Project/EE2026-Project\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.xpr
+INFO: [Project 1-313] Project file moved from 'C:/Users/jeric/Desktop/NUS/EE2026 Labs/SoundDisplay' since last save.
+Scanning sources...
+Finished scanning sources
+WARNING: [Project 1-509] GeneratedRun file for 'synth_1' not found
+WARNING: [Project 1-509] GeneratedRun file for 'impl_1' not found
+WARNING: [filemgmt 56-2] IPUserFilesDir: Could not find the directory 'F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.ip_user_files', nor could it be found using path 'C:/Users/jeric/Desktop/NUS/EE2026 Labs/SoundDisplay/SoundDisplay.ip_user_files'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2018.2/data/ip'.
+open_project: Time (s): cpu = 00:00:12 ; elapsed = 00:00:06 . Memory (MB): peak = 771.617 ; gain = 65.387
+update_compile_order -fileset sources_1
+launch_runs synth_1 -jobs 2
+[Sat Mar 28 22:56:21 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+open_project F:/19SEM2/EE2026/EE_Project/SoundDisplay/SoundDisplay.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2018.2/data/ip'.
+open_project: Time (s): cpu = 00:00:14 ; elapsed = 00:00:07 . Memory (MB): peak = 845.551 ; gain = 15.035
+update_compile_order -fileset sources_1
+current_project SoundDisplay
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 22:57:26 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+current_project SoundDisplay(2)
+current_project SoundDisplay
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 22:59:30 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 22:59:30 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+current_project SoundDisplay(2)
+current_project SoundDisplay
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:04:13 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:04:13 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:07:26 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:07:26 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:10:16 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:10:16 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:13:51 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:13:51 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run impl_1 -prev_step 
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+WARNING: [Vivado 12-872] Run step 'Design Initialization' is out-of-date.
+[Sat Mar 28 23:16:42 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:17:59 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:18:00 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:20:47 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:20:47 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:27:14 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:27:14 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:37:19 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:37:19 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+current_project SoundDisplay(2)
+current_project SoundDisplay
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:42:34 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:42:34 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+[Sat Mar 28 23:53:44 2020] Launched synth_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/synth_1/runme.log
+[Sat Mar 28 23:53:44 2020] Launched impl_1...
+Run output will be captured here: F:/19SEM2/EE2026/EE_Project/EE2026-Project/SoundDisplay.runs/impl_1/runme.log
+current_project SoundDisplay(2)
+close_project
+exit
+INFO: [Common 17-206] Exiting Vivado at Sat Mar 28 23:59:33 2020...
