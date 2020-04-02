@@ -27,8 +27,9 @@ module Top_Student (
     input sw5,
     input sw6,
     input sw7,
+    input sw8,
+    input sw14,
     input sw15,
-//    input sw8,
     input btnC,
     input btnU,
     input btnD,
@@ -72,21 +73,53 @@ module Top_Student (
     clock_divider_20k clk20 (CLK100MHZ, clk20k);
     Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
     
-    wire [4:0] a0;
-    wire [4:0] a1;
-    wire [4:0] a2;
-    wire [4:0] a3;
+    reg [4:0] a0;
+    reg [4:0] a1;
+    reg [4:0] a2;
+    reg [4:0] a3;
+    
+    wire [4:0] map_a0;
+    wire [4:0] map_a1;
+    wire [4:0] map_a2;
+    wire [4:0] map_a3;
+    
+    reg [4:0] ttt_a0;
+    reg [4:0] ttt_a1;
+    reg [4:0] ttt_a2;
+    reg [4:0] ttt_a3;
+    
     wire [3:0] map;
 
-    assign oled_data = (sw15 == 1) ? vis_oled : basic_oled_data;
     wire [15:0] pong_game_oled_data;    
     wire dbU;
     wire dbD;
     wire dbL;
     wire dbR;
+    
+    wire currentPlayer;
 
-    get_map gm(CLK100MHZ, sw, mic_in, map, a0, a1, a2, a3, led);
+    get_map gm(CLK100MHZ, sw, mic_in, map, map_a0, map_a1, map_a2, map_a3, led);
     sevensegdisp ssd (CLK100MHZ, a0, a1, a2, a3, an[3:0], seg[7:0]);
+    
+    // Change 7 segment display between volume and game
+    always @ (sw14) begin
+        if (sw14 == 1) begin
+            a0 <= ttt_a0; a1 <= ttt_a1; a2 <= ttt_a2; a3 <= ttt_a3;
+        end
+        else begin
+            a0 <= map_a0; a1 <= map_a1; a2 <= map_a2; a3 <= map_a3;
+        end
+    end
+    
+    // Change 7 segment display for player 1 and 2
+    always @ (currentPlayer) begin
+        if (currentPlayer == 0) begin
+            ttt_a0 <= 10; ttt_a1 <= 10; ttt_a2 <= 11; ttt_a3 <= 1;
+        end
+        else begin
+            ttt_a0 <= 10; ttt_a1 <= 10; ttt_a2 <= 11; ttt_a3 <= 2;
+        end
+    end    
     
     visualizer vis (CLK100MHZ, mic_in, x, y, vis_oled);
     
@@ -122,5 +155,9 @@ module Top_Student (
     buttons btns(clk5, dbD, dbU, dbR, dbL, 0, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
     pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, clk5, pong_game_oled_data);
     // can try to change frame_begin to other clk OR debounce clk to improve
-    assign oled_data = pong_game_oled_data;
+    
+    ttt_game tttgamelogic (dbU, dbD, dbL, currentPlayer);
+    
+    assign oled_data = (sw15 == 1) ? vis_oled : (sw8 == 1) ? pong_game_oled_data : basic_oled_data;
+    
 endmodule

@@ -35,9 +35,6 @@ module visualizer(input clk, input [11:0] mic_in, input [6:0] x, input [5:0] y, 
             else
                 vis_oled <= 16'b0000011111100000; // Red
         end
-        else if (x == x_ctr) begin
-            vis_oled <= 16'b0000000000011111;
-        end
         else begin
             vis_oled <= 16'b0000000000000000;
         end

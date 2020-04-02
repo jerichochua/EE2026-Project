@@ -13,6 +13,7 @@ module translate(input [4:0] value, output reg [7:0] segdisp);
             7: segdisp <= 8'b11111000; // 7
             8: segdisp <= 8'b10000000; // 8
             9: segdisp <= 8'b10010000; // 9
+            11: segdisp <= 8'b10001100; // P
             default: segdisp <= 8'b11111111; // empty
         endcase
     end
