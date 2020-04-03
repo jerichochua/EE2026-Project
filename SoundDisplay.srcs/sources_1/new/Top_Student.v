@@ -50,7 +50,7 @@ module Top_Student (
     wire clk20k;
     wire [11:0] mic_in;
     
-    wire clk6p25m, clk3, clk5, clk100;
+    wire clk6p25m, clk3, clk5, clk6;
     wire reset;
     wire [15:0] oled_data;
     
@@ -125,8 +125,8 @@ module Top_Student (
     
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
-    clock_divider_10 c3(CLK100MHZ, clk5);
-    clock_divider_100 c4(CLK100MHZ, clk100);
+    clock_divider_6 c3(CLK100MHZ, clk6);
+    clock_divider_5 c4(CLK100MHZ, clk5);
     debounce db(clk3, btnC, reset);
     Oled_Display OD(clk6p25m, reset, frame_begin, sending_pixels,
                     sample_pixel, pixel_index, oled_data, cs, sdin, sclk, d_cn, resn, vccen,
@@ -152,7 +152,7 @@ module Top_Student (
     wire [5:0] right_bar_yL;
     wire [5:0] right_bar_yH;
     //    wire reset_bar;
-    buttons btns(clk5, dbD, dbU, dbR, dbL, 0, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
+    buttons btns(clk6, dbD, dbU, dbR, dbL, 0, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
     pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, clk5, pong_game_oled_data);
     // can try to change frame_begin to other clk OR debounce clk to improve
     
@@ -169,9 +169,9 @@ module Top_Student (
     wire [1:0] box9;
     wire [15:0] ttt_oled_data;
          
-    ttt_game tttgamelogic (dbU, dbD, dbL, currentPlayer, curr_box, 
+    ttt_game tttgamelogic (clk3, dbU, dbD, dbL, currentPlayer, curr_box, 
             box1, box2, box3, box4, box5, box6, box7, box8, box9);
     ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
-//    assign oled_data = (sw15 == 1) ? vis_oled : (sw8 == 1) ? pong_game_oled_data : basic_oled_data;
-    assign oled_data = ttt_oled_data;    
+    assign oled_data = (sw15 == 1) ? vis_oled : (sw8 == 1) ? pong_game_oled_data : basic_oled_data;
+//    assign oled_data = ttt_oled_data;    
 endmodule

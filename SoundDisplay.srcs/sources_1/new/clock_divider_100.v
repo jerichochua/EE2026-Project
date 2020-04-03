@@ -20,17 +20,17 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module clock_divider_100(
+module clock_divider_5(
     input clk100M,
-    output clk100
+    output clk5
     );
-    reg [19:0] counter = 0;
-    parameter factor = 20'd1000000;
+    reg [24:0] counter = 0;
+    parameter factor = 25'd20000000;
     always @ (posedge clk100M) begin
         counter <= counter + 1;
         if (counter >= (factor - 1)) begin
             counter <= 0;
         end
     end
-    assign clk100 = (counter < (factor >> 1)) ? 1'd0 : 1'd1;
+    assign clk5 = (counter < (factor >> 1)) ? 1'd0 : 1'd1;
 endmodule
