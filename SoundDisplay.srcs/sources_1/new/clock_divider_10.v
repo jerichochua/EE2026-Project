@@ -20,9 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module clock_divider_10(
+module clock_divider_6(
     input clk100M,
-    output clk10
+    output clk6
     );
     reg [23:0] counter = 0;
     parameter factor = 24'd16666666;
@@ -32,5 +32,5 @@ module clock_divider_10(
             counter <= 0;
         end
     end
-    assign clk10 = (counter < (factor >> 1)) ? 1'd0 : 1'd1;
+    assign clk6 = (counter < (factor >> 1)) ? 1'd0 : 1'd1;
 endmodule
