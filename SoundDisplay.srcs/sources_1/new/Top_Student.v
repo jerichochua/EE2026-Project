@@ -184,5 +184,9 @@ module Top_Student (
 //    assign led[1] = (state == 1) ? 1 : 0; 
 //    assign led[2] = (state == 2) ? 1 : 0; 
 //    assign led[3] = (state == 3) ? 1 : 0; 
-    assign oled_data = (sw14 == 1) ? ttt_oled_data : ( (sw8 == 1) ? pong_game_oled_data : basic_oled_data );
+
+//    assign oled_data = (sw14 == 1) ? ttt_oled_data : ( (sw8 == 1) ? pong_game_oled_data : basic_oled_data );
+    wire [15:0] frame_display_data;
+    frame_display fd(frame_begin, x, y, frame_display_data);
+    assign oled_data = frame_display_data;
 endmodule
