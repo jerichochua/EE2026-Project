@@ -88,6 +88,11 @@ module Top_Student (
     reg [4:0] ttt_a2;
     reg [4:0] ttt_a3;
     
+    wire [4:0] sw_a0;
+    wire [4:0] sw_a1;
+    wire [4:0] sw_a2;
+    wire [4:0] sw_a3;
+    
     wire [3:0] map;
 
     wire [15:0] pong_game_oled_data;    
@@ -101,10 +106,13 @@ module Top_Student (
     get_map gm(CLK100MHZ, sw, mic_in, map, map_a0, map_a1, map_a2, map_a3, led);
     sevensegdisp ssd (CLK100MHZ, a0, a1, a2, a3, an[3:0], seg[7:0]);
     
-    // Change 7 segment display between volume and game
-    always @ (sw14) begin
+    // Change 7 segment display between stopwatch and game
+    always @ (sw14, sw15) begin
         if (sw14 == 1) begin
             a0 <= ttt_a0; a1 <= ttt_a1; a2 <= ttt_a2; a3 <= ttt_a3;
+        end
+        else if (sw15 == 1) begin
+            a0 <= sw_a0; a1 <= sw_a1; a2 <= sw_a2; a3 <= sw_a3;
         end
         else begin
             a0 <= map_a0; a1 <= map_a1; a2 <= map_a2; a3 <= map_a3;
@@ -121,7 +129,7 @@ module Top_Student (
         end
     end    
     
-    visualizer vis (CLK100MHZ, mic_in, x, y, vis_oled);
+    stopwatch stopw (CLK100MHZ, sw15, dbR, sw_a0, sw_a1, sw_a2, sw_a3);
     
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
@@ -156,7 +164,6 @@ module Top_Student (
     pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, clk5, pong_game_oled_data);
     // can try to change frame_begin to other clk OR debounce clk to improve
     
-    
     wire [3:0] curr_box;
     wire [1:0] box1;
     wire [1:0] box2; 
@@ -169,9 +176,9 @@ module Top_Student (
     wire [1:0] box9;
     wire [15:0] ttt_oled_data;
          
-    ttt_game tttgamelogic (dbU, dbD, dbL, currentPlayer, curr_box, 
+    ttt_game tttgamelogic (clk3, dbU, dbD, dbL, currentPlayer, curr_box, 
             box1, box2, box3, box4, box5, box6, box7, box8, box9);
     ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
-//    assign oled_data = (sw15 == 1) ? vis_oled : (sw8 == 1) ? pong_game_oled_data : basic_oled_data;
-    assign oled_data = ttt_oled_data;    
+    
+    assign oled_data = (sw14 == 1) ? ttt_oled_data : ( (sw8 == 1) ? pong_game_oled_data : basic_oled_data );
 endmodule
