@@ -161,7 +161,7 @@ module Top_Student (
     wire [5:0] right_bar_yH;
     //    wire reset_bar;
     buttons btns(clk6, dbD, dbU, dbR, dbL, 0, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
-    pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, clk5, pong_game_oled_data);
+    pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, clk3, pong_game_oled_data);
     // can try to change frame_begin to other clk OR debounce clk to improve
     
     wire [3:0] curr_box;
@@ -175,10 +175,14 @@ module Top_Student (
     wire [1:0] box8;
     wire [1:0] box9;
     wire [15:0] ttt_oled_data;
-         
+    wire [1:0] state;
     ttt_game tttgamelogic (clk3, dbU, dbD, dbL, currentPlayer, curr_box, 
-            box1, box2, box3, box4, box5, box6, box7, box8, box9);
+            box1, box2, box3, box4, box5, box6, box7, box8, box9, state);
     ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
-
+    // for testing
+//    assign led[0] = (state == 0) ? 1 : 0; 
+//    assign led[1] = (state == 1) ? 1 : 0; 
+//    assign led[2] = (state == 2) ? 1 : 0; 
+//    assign led[3] = (state == 3) ? 1 : 0; 
     assign oled_data = (sw14 == 1) ? ttt_oled_data : ( (sw8 == 1) ? pong_game_oled_data : basic_oled_data );
 endmodule

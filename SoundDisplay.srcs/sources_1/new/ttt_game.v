@@ -15,7 +15,8 @@ module ttt_game(input clk, input btnU, input btnD, input btnL, output reg curren
     output reg [1:0] box6 = 0,
     output reg [1:0] box7 = 0,
     output reg [1:0] box8 = 0,
-    output reg [1:0] box9 = 0
+    output reg [1:0] box9 = 0,
+    output reg [1:0] state = 0
     );
     
     always @ (posedge clk) begin
@@ -95,31 +96,76 @@ module ttt_game(input clk, input btnU, input btnD, input btnL, output reg curren
             end                           
         end
         
-        /*
-        if (box1 == box4 && box4 == box7 && (box1 == 1 || box1 == 2)) begin
         
+        if (box1 == box4 && box4 == box7) begin
+            if (box1 == 1) begin
+                state = 1;
+            end
+            else if (box1 == 2) begin
+                state = 2;
+            end
         end
-        else if (box2 == box5 && box5 == box8 && (box2 == 1 || box2 == 2)) begin
+        else if (box2 == box5 && box5 == box8) begin
+            if (box2 == 1) begin
+                state = 1;
+            end
+            else if (box2 == 2) begin
+                state = 2;
+            end
+        end
+        else if (box3 == box6 && box6 == box9) begin
+            if (box3 == 1) begin
+                state = 1;
+            end
+            else if (box3 == 2) begin
+                state = 2;
+            end
+        end
+        else if (box1 == box2 && box2 == box3) begin
+            if (box1 == 1) begin
+                state = 1;
+            end
+            else if (box1 == 2) begin
+                state = 2;
+            end
+        end
+        else if (box4 == box5 && box5 == box6) begin
+            if (box4 == 1) begin
+                state = 1;
+            end
+            else if (box4 == 2) begin
+                state = 2;
+            end
+        end
+        else if (box7 == box8 && box8 == box9) begin
+            if (box7 == 1) begin
+                state = 1;
+            end
+            else if (box7 == 2) begin
+                state = 2;
+            end
+        end
+        else if (box1 == box5 && box5 == box9) begin
+            if (box1 == 1) begin
+                state = 1;
+            end
+            else if (box1 == 2) begin
+                state = 2;
+            end
+        end
+        else if (box3 == box5 && box5 == box7) begin
+            if (box3 == 1) begin
+                state = 1;
+            end
+            else if (box3 == 2) begin
+                state = 2;
+            end        
+        end
         
-        end
-        else if (box3 == box6 && box6 == box9 && (box3 == 1 || box3 == 2)) begin
-        
-        end
-        else if (box1 == box2 && box2 == box3 && (box1 == 1 || box1 == 2)) begin
-        
-        end
-        else if (box4 == box5 && box5 == box6 && (box4 == 1 || box4 == 2)) begin
-        
-        end
-        else if (box7 == box8 && box8 == box9 && (box7 == 1 || box7 == 2)) begin
-        
-        end
-        else if (box1 == box5 && box5 == box9 && (box1 == 1 || box1 == 2)) begin
-        
-        end
-        else if (box3 == box5 && box5 == box7 && (box3 == 1 || box3 == 2)) begin
-        
-        end
-        */
+        if (box1 && box2 && box3 && box4 && box5 && box6 && box7 && box8 && box9) begin
+            if (state == 0) begin
+                state <= 3;
+            end
+        end 
     end
 endmodule
