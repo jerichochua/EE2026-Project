@@ -188,7 +188,7 @@ module Top_Student (
     ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
 
     
-    assign state = (sw[14] ? ttt_state : (sw[8] ? pong_state : 0));  
+    assign state = sw[14] ? ttt_state : (sw[8] ? pong_state : 0);  
 
     wire [15:0] frame_display_data;
     frame_display fd(frame_begin, x, y, frame_display_data);
