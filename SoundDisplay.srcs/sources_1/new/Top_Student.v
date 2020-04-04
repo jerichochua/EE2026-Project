@@ -91,6 +91,7 @@ module Top_Student (
     wire dbR;
     
     wire currentPlayer;
+    wire [1:0] state;
     
     debounce dbtnU(clk3, btnU, dbU);
     debounce dbtnD(clk3, btnD, dbD);
@@ -119,12 +120,23 @@ module Top_Student (
     end
     
     // Change 7 segment display for player 1 and 2
-    always @ (currentPlayer) begin
-        if (currentPlayer == 0) begin
-            ttt_a0 <= 10; ttt_a1 <= 10; ttt_a2 <= 11; ttt_a3 <= 1;
+    always @ (currentPlayer, state, sw[14]) begin
+        if (state == 0 && sw[14] == 1) begin
+            if (currentPlayer == 0) begin
+                ttt_a0 <= 10; ttt_a1 <= 10; ttt_a2 <= 11; ttt_a3 <= 1;
+            end
+            else begin
+                ttt_a0 <= 10; ttt_a1 <= 10; ttt_a2 <= 11; ttt_a3 <= 2;
+            end
         end
-        else begin
-            ttt_a0 <= 10; ttt_a1 <= 10; ttt_a2 <= 11; ttt_a3 <= 2;
+        else if (state == 1) begin
+            ttt_a0 <= 11; ttt_a1 <= 1; ttt_a2 <= 10; ttt_a3 <= 15;
+        end
+        else if (state == 2) begin
+            ttt_a0 <= 11; ttt_a1 <= 2; ttt_a2 <= 10; ttt_a3 <= 15;
+        end
+        else if (state == 3) begin
+            ttt_a0 <= 12; ttt_a1 <= 13; ttt_a2 <= 14; ttt_a3 <= 15;
         end
     end    
     
@@ -175,7 +187,7 @@ module Top_Student (
             box1, box2, box3, box4, box5, box6, box7, box8, box9, ttt_state);
     ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
 
-    wire [1:0] state;
+    
     assign state = (sw[14] ? ttt_state : (sw[8] ? pong_state : 0));  
 
     wire [15:0] frame_display_data;
