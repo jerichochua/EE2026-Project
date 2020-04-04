@@ -26,9 +26,10 @@ module pong(
     input [5:0] right_bar_yL,
     input [5:0] right_bar_yH,
     input clk,
-//    output reg reset,
+    output reg reset,
     output reg [6:0] ball_x = 47,
-    output reg [5:0] ball_y = 31
+    output reg [5:0] ball_y = 31,
+    output reg [1:0] pong_state = 0
     );
 
     parameter [2:0] left_bar_x = 4;
@@ -40,7 +41,7 @@ module pong(
 //    reg stop = 0; // TO BE CHANGED
     
     always @ (posedge clk) begin
-//        reset <= 0;
+        reset <= 0;
         // ball position
         
         case (x_dirc)
@@ -77,7 +78,8 @@ module pong(
         
         if (ball_x == left_bar_x + 1) begin
             // check left bar
-//            if (((ball_y + ((y_dirc) ? 1 : -1)) >= left_bar_yL) && ((ball_y + ((y_dirc) ? 1 : -1)) <= left_bar_yH))  begin
+//            if (((ball_y + ((y_dirc) ? 1 : -1)) >= left_bar_yL) &&
+//               ((ball_y + ((y_dirc) ? 1 : -1)) <= left_bar_yH))  begin
             if ((ball_y > left_bar_yL) && (ball_y < left_bar_yH))  begin
                 if (y_dirc) begin
                     ball_y <= ball_y + 1;
@@ -90,14 +92,16 @@ module pong(
             end
             else begin
                 ball_x <= 47;
-                ball_y <= 31; 
-//                reset <= 1;
+                ball_y <= 31;
+                pong_state <= 2;
+                reset <= 1;
             end
         end
         
         if (ball_x == right_bar_x - 1) begin
             // check right bar
-//            if (((ball_y + (y_dirc) ? 1 : -1) >= right_bar_yL) && ((ball_y + (y_dirc) ? 1 : -1) <= right_bar_yH))  begin
+//            if (((ball_y + ((y_dirc) ? 1 : -1)) >= left_bar_yL) &&
+//               ((ball_y + ((y_dirc) ? 1 : -1)) <= left_bar_yH))  begin
             if ((ball_y > right_bar_yL) && (ball_y < right_bar_yH))  begin
                 if (y_dirc) begin
                     ball_y <= ball_y + 1;
@@ -111,7 +115,8 @@ module pong(
             else begin
                 ball_x <= 47;
                 ball_y <= 31;
-//                reset <= 1; 
+                pong_state <= 1;
+                reset <= 1; 
             end
         end
     end

@@ -14,7 +14,10 @@ module translate(input [4:0] value, output reg [7:0] segdisp);
             8: segdisp <= 8'b10000000; // 8
             9: segdisp <= 8'b10010000; // 9
             11: segdisp <= 8'b10001100; // P
-            12: segdisp <= 8'b11010101; // W
+            12: segdisp <= 8'b10100001; // D
+            13: segdisp <= 8'b10101111; // R
+            14: segdisp <= 8'b10001000; // A
+            15: segdisp <= 8'b11010101; // W    
             20: segdisp <= 8'b01000000; // 0.
             21: segdisp <= 8'b01111001; // 1.
             22: segdisp <= 8'b00100100; // 2.
