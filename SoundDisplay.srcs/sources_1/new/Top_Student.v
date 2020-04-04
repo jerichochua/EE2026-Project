@@ -19,17 +19,7 @@ module Top_Student (
     input CLK100MHZ,
     output J_MIC3_Pin1,   // Connect to this signal from Audio_Capture.v
     output J_MIC3_Pin4,    // Connect to this signal from Audio_Capture.v
-    input sw,
-    input sw1,
-    input sw2,
-    input sw3,
-    input sw4,
-    input sw5,
-    input sw6,
-    input sw7,
-    input sw8,
-    input sw14,
-    input sw15,
+    input [15:0] sw,
     input btnC,
     input btnU,
     input btnD,
@@ -52,10 +42,12 @@ module Top_Student (
     
     wire clk6p25m, clk3, clk5, clk6;
     wire reset;
-    wire [15:0] oled_data;
     
+    wire [15:0] oled_data;
     wire [15:0] basic_oled_data;
     wire [15:0] vis_oled;
+    wire [15:0] pong_game_oled_data;
+    wire [15:0] ttt_oled_data;
     
     wire frame_begin, sending_pixels, sample_pixel;
     wire [12:0] pixel_index;
@@ -69,10 +61,8 @@ module Top_Student (
     wire [15:0] top_color;
     wire [15:0] mid_color;
     wire [15:0] bot_color;
-
-    clock_divider_20k clk20 (CLK100MHZ, clk20k);
-    Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
     
+    // 7 segment registers/wires
     reg [4:0] a0;
     reg [4:0] a1;
     reg [4:0] a2;
@@ -94,24 +84,33 @@ module Top_Student (
     wire [4:0] sw_a3;
     
     wire [3:0] map;
-
-    wire [15:0] pong_game_oled_data;    
+    
     wire dbU;
     wire dbD;
     wire dbL;
     wire dbR;
     
     wire currentPlayer;
+    
+    debounce dbtnU(clk3, btnU, dbU);
+    debounce dbtnD(clk3, btnD, dbD);
+    debounce dbtnL(clk3, btnL, dbL);
+    debounce dbtnR(clk3, btnR, dbR);
+    
+    clock_divider_20k clk20 (CLK100MHZ, clk20k);
+    Audio_Capture audio (CLK100MHZ, clk20k, J_MIC3_Pin3, J_MIC3_Pin1, J_MIC3_Pin4, mic_in);
 
-    get_map gm(CLK100MHZ, sw, mic_in, map, map_a0, map_a1, map_a2, map_a3, led);
+    get_map gm(CLK100MHZ, sw[0], mic_in, map, map_a0, map_a1, map_a2, map_a3, led);
     sevensegdisp ssd (CLK100MHZ, a0, a1, a2, a3, an[3:0], seg[7:0]);
     
+    stopwatch stopw (CLK100MHZ, sw[15], dbR, sw_a0, sw_a1, sw_a2, sw_a3);
+    
     // Change 7 segment display between stopwatch and game
-    always @ (sw14, sw15) begin
-        if (sw14 == 1) begin
+    always @ (sw[14], sw[15]) begin
+        if (sw[14] == 1) begin
             a0 <= ttt_a0; a1 <= ttt_a1; a2 <= ttt_a2; a3 <= ttt_a3;
         end
-        else if (sw15 == 1) begin
+        else if (sw[15] == 1) begin
             a0 <= sw_a0; a1 <= sw_a1; a2 <= sw_a2; a3 <= sw_a3;
         end
         else begin
@@ -129,8 +128,6 @@ module Top_Student (
         end
     end    
     
-    stopwatch stopw (CLK100MHZ, sw15, dbR, sw_a0, sw_a1, sw_a2, sw_a3);
-    
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
     clock_divider_6 c3(CLK100MHZ, clk6);
@@ -141,19 +138,14 @@ module Top_Student (
                     pmoden, teststate);
 
     coordinate xy(pixel_index, x, y);
-    sel_color_scheme scs(sw4, sw5, border_color, back_color, top_color, mid_color, bot_color);
+    sel_color_scheme scs(sw[4], sw[5], border_color, back_color, top_color, mid_color, bot_color);
 
     wire [5:0] min;
     
-    freeze f(CLK100MHZ, sw7, map, min);
+    freeze f(CLK100MHZ, sw[7], map, min);
 
-    border p1(x, y, sw1, sw2, sw3, sw6,
+    border p1(x, y, sw[1], sw[2], sw[3], sw[6],
               border_color, back_color, top_color, mid_color, bot_color, min, basic_oled_data); 
-
-    debounce dbtnU(clk3, btnU, dbU);
-    debounce dbtnD(clk3, btnD, dbD);
-    debounce dbtnL(clk3, btnL, dbL);
-    debounce dbtnR(clk3, btnR, dbR);
               
     wire [5:0] left_bar_yL;
     wire [5:0] left_bar_yH;
@@ -174,7 +166,6 @@ module Top_Student (
     wire [1:0] box7; 
     wire [1:0] box8;
     wire [1:0] box9;
-    wire [15:0] ttt_oled_data;
     wire [1:0] state;
     ttt_game tttgamelogic (clk3, dbU, dbD, dbL, currentPlayer, curr_box, 
             box1, box2, box3, box4, box5, box6, box7, box8, box9, state);
@@ -189,4 +180,6 @@ module Top_Student (
     wire [15:0] frame_display_data;
     frame_display fd(frame_begin, x, y, frame_display_data);
     assign oled_data = frame_display_data;
+    assign oled_data = (sw[14] == 1) ? ttt_oled_data : ( (sw[8] == 1) ? pong_game_oled_data : ((sw == 0) ? frame_display_data : basic_oled_data) );
+
 endmodule
