@@ -187,7 +187,6 @@ module Top_Student (
             box1, box2, box3, box4, box5, box6, box7, box8, box9, ttt_state);
     ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
 
-    
     assign state = sw[14] ? ttt_state : (sw[8] ? pong_state : 0);  
 
     wire [15:0] frame_display_data;
@@ -196,5 +195,4 @@ module Top_Student (
     assign oled_data = (sw[14] == 1) ? ttt_oled_data : 
                        ((sw[8] == 1) ? pong_game_oled_data : 
                        ((sw == 0) ? frame_display_data : basic_oled_data));
-
 endmodule

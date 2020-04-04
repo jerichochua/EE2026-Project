@@ -28,7 +28,7 @@ module get_map(
             max <= mic_in;
         end
         
-        if (sw == 1) begin
+        if (sw == 0) begin
             led <= mic_in;
             a0 <= 2;
             a1 <= 0;

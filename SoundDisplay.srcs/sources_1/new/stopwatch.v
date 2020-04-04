@@ -7,6 +7,7 @@
 
 module stopwatch(input clk, input start, input reset, output reg [4:0] a0 = 20, output reg [4:0] a1 = 0, output reg [4:0] a2 = 20, output reg [4:0] a3 = 0);
     reg [23:0] count = 0;
+    reg stopcount = 0;
     wire tick;
     
     assign tick = (count == 10000000) ? 1 : 0;
@@ -14,17 +15,19 @@ module stopwatch(input clk, input start, input reset, output reg [4:0] a0 = 20, 
     always @ (posedge clk) begin
         if (reset) begin
             count <= 0;
+            stopcount <= 0;
             a0 <= 20;
             a1 <= 0;
             a2 <= 20;
             a3 <= 0;
         end
-       
+    
         if (count == 10000000) begin // To get 0.1s
             count <= 0;
         end
         else if (start) begin
-            count <= count + 1;
+            if (stopcount == 0)
+                count <= count + 1;
         end
         
         if (tick) begin
