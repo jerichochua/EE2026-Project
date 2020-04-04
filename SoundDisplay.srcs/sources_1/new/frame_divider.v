@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03/30/2020 11:36:45 AM
+// Create Date: 04/04/2020 08:38:58 AM
 // Design Name: 
-// Module Name: freeze
+// Module Name: frame_divider
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,22 +20,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module freeze(
-    input CLK100MHZ,
-    input sw7,
-    input [3:0] map,
-    output reg [5:0] min
+module frame_divider(
+    input frame_begin,
+    output reg out
     );
+    reg [4:0] counter = 0;
     
-    reg [5:0] freeze_value;
-    always @ (posedge CLK100MHZ) begin
-        if (sw7) begin
-            min <= freeze_value;
-        end
-        else begin
-            min <= 56 - (map + 1) * 3;
-            freeze_value <= min;
+    always @ (posedge frame_begin) begin
+        counter = counter + 1;
+        if (counter == 0) begin
+            out = 1;
         end
     end
-    
 endmodule

@@ -30,14 +30,14 @@ module sel_color_scheme(
     output [15:0] bot_color
     );
     
-    assign border_color = (sw4) ? ((sw5) ? 16'b1111111111111111 : 16'b1111111111111111) 
-                        : 16'b1111111111111111;
-    assign back_color = (sw4) ? ((sw5) ? 16'b0 : 16'b0) 
-                        : 16'b0;
-    assign top_color = (sw4) ? ((sw5) ? 16'b0011011111100110 : 16'b1111110000000000) 
-                        : 16'b1111100000000000;
-    assign mid_color = (sw4) ? ((sw5) ? 16'b0000010101100000 : 16'b1001100000010011) 
-                        : 16'b1111111111100000;
-    assign bot_color = (sw4) ? ((sw5) ? 16'b0011110011111010 : 16'b0000010011000000) 
-                        : 16'b0000011111100000;
+    assign border_color = (sw4) ? ((sw5) ? 16'hFFFF : 16'hFFFF) 
+                        : 16'hFFFF;
+    assign back_color = (sw4) ? ((sw5) ? 16'h0000 : 16'h0000) 
+                        : 16'h0000;
+    assign top_color = (sw4) ? ((sw5) ? 16'h37E6 : 16'hFC00) 
+                        : 16'hF800;
+    assign mid_color = (sw4) ? ((sw5) ? 16'h0560 : 16'h9813) 
+                        : 16'hFFE0;
+    assign bot_color = (sw4) ? ((sw5) ? 16'h3CFA : 16'h04C0) 
+                        : 16'h07E0;
 endmodule

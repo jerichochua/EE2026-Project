@@ -25,33 +25,14 @@ module pong(
     input [5:0] left_bar_yH,
     input [5:0] right_bar_yL,
     input [5:0] right_bar_yH,
-    input [6:0] x,
-    input [5:0] y,
     input clk,
-//    input clk2,
 //    output reg reset,
-    output reg [15:0] oled_data
+    output reg [6:0] ball_x = 47,
+    output reg [5:0] ball_y = 31
     );
-    
-    wire [1:0] borderWidth = 3;
-    wire [3:0] bar_length = 10;
-//    wire [1:0] ball_length = 3;
 
-    wire [2:0] left_bar_x = 4;
-    wire [6:0] right_bar_x = 91;
-    
-    wire [15:0] back_color = 16'h0000;
-    wire [15:0] game_color = 16'hFFFF; 
-    
-    reg [6:0] ball_x = 47; // starts @ center but random direction
-    reg [5:0] ball_y = 31;
-//    reg [5:0] ball_yL;
-//    reg [5:0] ball_yH;
-    
-//    reg [5:0] left_bar_yL = 24;
-//    reg [5:0] left_bar_yH = 33;
-//    reg [5:0] right_bar_yL = 24;
-//    reg [5:0] right_bar_yH = 33;
+    parameter [2:0] left_bar_x = 4;
+    parameter [6:0] right_bar_x = 91;
     
     reg x_dirc = 1; // 0 : -1, 1 : +1
     reg y_dirc = 1; // 0 : -1, 1 : +1
@@ -94,7 +75,7 @@ module pong(
             ball_y <= 59; // 59
         end
         
-        if (ball_x == 5) begin
+        if (ball_x == left_bar_x + 1) begin
             // check left bar
 //            if (((ball_y + ((y_dirc) ? 1 : -1)) >= left_bar_yL) && ((ball_y + ((y_dirc) ? 1 : -1)) <= left_bar_yH))  begin
             if ((ball_y > left_bar_yL) && (ball_y < left_bar_yH))  begin
@@ -114,7 +95,7 @@ module pong(
             end
         end
         
-        if (ball_x == 90) begin
+        if (ball_x == right_bar_x - 1) begin
             // check right bar
 //            if (((ball_y + (y_dirc) ? 1 : -1) >= right_bar_yL) && ((ball_y + (y_dirc) ? 1 : -1) <= right_bar_yH))  begin
             if ((ball_y > right_bar_yL) && (ball_y < right_bar_yH))  begin
@@ -132,66 +113,6 @@ module pong(
                 ball_y <= 31;
 //                reset <= 1; 
             end
-        end
-    end
-    
-//    always @ (posedge clk2) begin
-//    // buttons
-//        if (btnU) begin // player 1 (left) up
-//            if (left_bar_yH < 60) begin
-//                left_bar_yH <= left_bar_yH + 1;
-//                left_bar_yL <= left_bar_yL + 1;
-//            end
-//        end
-        
-//        if (btnD) begin // player 1 (left) down
-//            if (left_bar_yL > 3) begin
-//                left_bar_yH <= left_bar_yH - 1;
-//                left_bar_yL <= left_bar_yL - 1;
-//            end
-//        end
-        
-//        if (btnL) begin // player 2 (right) up
-//            if (right_bar_yH < 60) begin
-//                right_bar_yH <= right_bar_yH + 1;
-//                right_bar_yL <= right_bar_yL + 1;
-//            end
-//        end
-        
-//        if (btnR) begin // player 2 (right) down
-//            if (right_bar_yL > 3) begin
-//                right_bar_yH <= right_bar_yH - 1;
-//                right_bar_yL <= right_bar_yL - 1;
-//            end
-//        end    
-//    end
-    
-    always @ (x, y) begin
-        if (x < borderWidth || x > (7'd95 - borderWidth) || y < borderWidth || y > (6'd63 - borderWidth)) begin
-            oled_data <= game_color;
-        end
-        else if (x == left_bar_x) begin
-            if (y >= left_bar_yL && y <= left_bar_yH) begin
-                oled_data <= game_color;
-            end
-            else begin
-                oled_data <= back_color;
-            end
-        end
-        else if (x == right_bar_x) begin
-            if (y >= right_bar_yL && y <= right_bar_yH) begin
-                oled_data <= game_color;
-            end
-            else begin
-                oled_data <= back_color;
-            end
-        end
-        else begin
-            oled_data <= back_color; 
-        end
-        
-        if (x == ball_x && y == ball_y) begin
-            oled_data <= game_color;
         end
     end
     

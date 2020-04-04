@@ -130,8 +130,6 @@ module Top_Student (
     
     clock_divider_6p25m c1(CLK100MHZ, clk6p25m);
     clock_divider_3 c2(CLK100MHZ, clk3);
-    clock_divider_6 c3(CLK100MHZ, clk6);
-    clock_divider_5 c4(CLK100MHZ, clk5);
     debounce db(clk3, btnC, reset);
     Oled_Display OD(clk6p25m, reset, frame_begin, sending_pixels,
                     sample_pixel, pixel_index, oled_data, cs, sdin, sclk, d_cn, resn, vccen,
@@ -144,7 +142,7 @@ module Top_Student (
     
     freeze f(CLK100MHZ, sw[7], map, min);
 
-    border p1(x, y, sw[1], sw[2], sw[3], sw[6],
+    basic_display bdp(x, y, sw[1], sw[2], sw[3], sw[6],
               border_color, back_color, top_color, mid_color, bot_color, min, basic_oled_data); 
               
     wire [5:0] left_bar_yL;
@@ -152,8 +150,16 @@ module Top_Student (
     wire [5:0] right_bar_yL;
     wire [5:0] right_bar_yH;
     //    wire reset_bar;
-    buttons btns(clk6, dbD, dbU, dbR, dbL, 0, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
-    pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, clk3, pong_game_oled_data);
+    wire out;
+    wire [6:0] ball_x;
+    wire [5:0] ball_y;
+    
+    clock_divider_6 c3(CLK100MHZ, clk6);
+    clock_divider_5 c4(CLK100MHZ, clk5);
+    frame_divider fdiv(frame_begin, out);
+    buttons btns(clk5, dbD, dbU, dbR, dbL, 0, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
+    pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, clk5, ball_x, ball_y);
+    pong_display pd(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, ball_x, ball_y, pong_game_oled_data);
     // can try to change frame_begin to other clk OR debounce clk to improve
     
     wire [3:0] curr_box;
@@ -170,15 +176,12 @@ module Top_Student (
     ttt_game tttgamelogic (clk3, dbU, dbD, dbL, currentPlayer, curr_box, 
             box1, box2, box3, box4, box5, box6, box7, box8, box9, state);
     ttt_display td(box1, box2, box3, box4, box5, box6, box7, box8, box9, curr_box, x, y, ttt_oled_data);
-    // for testing
-//    assign led[0] = (state == 0) ? 1 : 0; 
-//    assign led[1] = (state == 1) ? 1 : 0; 
-//    assign led[2] = (state == 2) ? 1 : 0; 
-//    assign led[3] = (state == 3) ? 1 : 0; 
 
     wire [15:0] frame_display_data;
     frame_display fd(frame_begin, x, y, frame_display_data);
-//    assign oled_data = frame_display_data;
-    assign oled_data = (sw[14] == 1) ? ttt_oled_data : ( (sw[8] == 1) ? pong_game_oled_data : ((sw == 0) ? frame_display_data : basic_oled_data) );
+    
+    assign oled_data = (sw[14] == 1) ? ttt_oled_data : 
+                       ((sw[8] == 1) ? pong_game_oled_data : 
+                       ((sw == 0) ? frame_display_data : basic_oled_data));
 
 endmodule

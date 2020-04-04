@@ -27,14 +27,15 @@ module frame_display(
     output reg [15:0] oled_data
     );
     
-    reg [2:0] frames = 0;
+    
     parameter [15:0] black_color = 16'h0000;
     parameter [15:0] white_color = 16'hFFFF;
     parameter [15:0] red_color = 16'hF800;
     parameter [15:0] green_color = 16'h07E0;
     parameter [15:0] blue_color = 16'h001F;
+    parameter [15:0] yellow_color = 16'hFFE0;
     reg [6:0] counter = 0;
-    
+    reg [2:0] frames = 0;
     always @ (posedge frame_begin) begin
         counter = counter + 1;
         if (counter == 0) begin  
@@ -114,22 +115,19 @@ module frame_display(
                     end
                     if ((3 * y < 11 * x - 172) && (3 * y < 345 - 11 * x)) begin
                         oled_data = black_color;
-                    end
-    //                    if ((3 * y < 143 - 5 * x) || (3 * y < 5 * x - 92)) begin //68
-    //                        oled_data = black_color;
-    //                    end               
+                    end            
                 end
             end
             if (y >= 16 && y <=47) begin // 2
                 if (x >= 32 && x <= 47) begin      
                     if (x >= 32 && x <= 47 && y >= 16 && y <= 21)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if ((15 * y < 1537 - 26 * x) && (15 * y > 1462 - 26 * x)) begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if (x >= 32 && x <= 47 && y >= 42 && y <= 47)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end               
                 end
             end            
@@ -157,22 +155,19 @@ module frame_display(
                     end
                     if ((3 * y < 11 * x - 172) && (3 * y < 345 - 11 * x)) begin
                         oled_data = black_color;
-                    end
-    //                    if ((3 * y < 143 - 5 * x) || (3 * y < 5 * x - 92)) begin //68
-    //                        oled_data = black_color;
-    //                    end               
+                    end              
                 end
             end
             if (y >= 16 && y <=47) begin // 2
                 if (x >= 32 && x <= 47) begin      
                     if (x >= 32 && x <= 47 && y >= 16 && y <= 21)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if ((15 * y < 1537 - 26 * x) && (15 * y > 1462 - 26 * x)) begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if (x >= 32 && x <= 47 && y >= 42 && y <= 47)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end               
                 end
             end 
@@ -208,22 +203,19 @@ module frame_display(
                     end
                     if ((3 * y < 11 * x - 172) && (3 * y < 345 - 11 * x)) begin
                         oled_data = black_color;
-                    end
-    //                    if ((3 * y < 143 - 5 * x) || (3 * y < 5 * x - 92)) begin //68
-    //                        oled_data = black_color;
-    //                    end               
+                    end              
                 end
             end
             if (y >= 16 && y <=47) begin // 2
                 if (x >= 32 && x <= 47) begin      
                     if (x >= 32 && x <= 47 && y >= 16 && y <= 21)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if ((15 * y < 1537 - 26 * x) && (15 * y > 1462 - 26 * x)) begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if (x >= 32 && x <= 47 && y >= 42 && y <= 47)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end               
                 end
             end 
@@ -238,13 +230,13 @@ module frame_display(
             if (y >= 16 && y <=47) begin // 2
                 if (x >= 64 && x <= 79) begin      
                     if (x >= 64 && x <= 79 && y >= 16 && y <= 21)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if ((15 * y < 2369 - 26 * x) && (15 * y > 2294 - 26 * x)) begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if (x >= 64 && x <= 79 && y >= 42 && y <= 47)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end               
                 end
             end                               
@@ -272,22 +264,19 @@ module frame_display(
                     end
                     if ((3 * y < 11 * x - 172) && (3 * y < 345 - 11 * x)) begin
                         oled_data = black_color;
-                    end
-    //                    if ((3 * y < 143 - 5 * x) || (3 * y < 5 * x - 92)) begin //68
-    //                        oled_data = black_color;
-    //                    end               
+                    end               
                 end
             end
             if (y >= 16 && y <=47) begin // 2
                 if (x >= 32 && x <= 47) begin      
                     if (x >= 32 && x <= 47 && y >= 16 && y <= 21)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if ((15 * y < 1537 - 26 * x) && (15 * y > 1462 - 26 * x)) begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if (x >= 32 && x <= 47 && y >= 42 && y <= 47)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end               
                 end
             end 
@@ -302,13 +291,13 @@ module frame_display(
             if (y >= 16 && y <=47) begin // 2
                 if (x >= 64 && x <= 79) begin      
                     if (x >= 64 && x <= 79 && y >= 16 && y <= 21)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if ((15 * y < 2369 - 26 * x) && (15 * y > 2294 - 26 * x)) begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end
                     if (x >= 64 && x <= 79 && y >= 42 && y <= 47)  begin
-                        oled_data = white_color;
+                        oled_data = yellow_color;
                     end               
                 end
             end         
@@ -325,9 +314,7 @@ module frame_display(
                     end       
                 end
             end                        
-        end
-        
-        
+        end    
              
     end
 endmodule
