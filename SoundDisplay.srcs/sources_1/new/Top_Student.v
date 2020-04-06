@@ -168,7 +168,7 @@ module Top_Student (
 //    clock_divider_6 c3(CLK100MHZ, clk6);
     clock_divider_5 c4(CLK100MHZ, clk5);
 //    frame_divider fdiv(frame_begin, out);
-    buttons btns(clk5, dbD, dbU, dbR, dbL, reset_bar, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
+    buttons btns(clk5, dbD, dbL, dbR, dbU, reset_bar, left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH); // 6 6
     pong pong_game(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, clk5, reset_bar, ball_x, ball_y, pong_state);
     pong_display pd(left_bar_yL, left_bar_yH, right_bar_yL, right_bar_yH, x, y, ball_x, ball_y, pong_game_oled_data);
     
